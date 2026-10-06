@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+@theme {
+  --color-page: var(--bg-page);
+  --color-surface: var(--bg-surface);
+  --color-subtle: var(--bg-subtle);
+  --color-muted: var(--bg-muted);
+  --color-hairline: var(--border-hairline);
+  --color-strong: var(--border-strong);
+  --color-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-sage: var(--accent-sage);
+  --color-sage-hover: var(--accent-sage-hover);
+  --color-sage-subtle: var(--accent-sage-subtle);
+  --color-sage-border: var(--accent-sage-border);
+  --color-on-sage: var(--text-on-sage);
+}
+
+@layer base {
+  :root {
+    --bg-page: #faf9f6;
+    --bg-surface: #ffffff;
+    --bg-subtle: #f4f2ec;
+    --bg-muted: #e9e7df;
+    --border-hairline: #e4e1d7;
+    --border-strong: #cac6b9;
+    --text-main: #181a18;
+    --text-muted: #52564e;
+    --text-subtle: #656961;
+    --accent-sage: #3c5934;
+    --accent-sage-hover: #314a2a;
+    --accent-sage-subtle: #edf3eb;
+    --accent-sage-border: #9fb897;
+    --text-on-sage: #ffffff;
+    --focus-ring: rgba(60, 89, 52, 0.3);
+    --grid-dot: #dedbd0;
+    --code-bg: #f8f6f0;
+  }
+
+  [data-theme="dark"] {
+    --bg-page: #131513;
+    --bg-surface: #191c19;
+    --bg-subtle: #212521;
+    --bg-muted: #2a302a;
+    --border-hairline: #2b312b;
+    --border-strong: #3e463e;
+    --text-main: #edeeec;
+    --text-muted: #a4a99f;
+    --text-subtle: #989e93;
+    --accent-sage: #75a16c;
+    --accent-sage-hover: #87b57d;
+    --accent-sage-subtle: #1b261a;
+    --accent-sage-border: #435c3e;
+    --text-on-sage: #131513;
+    --focus-ring: rgba(117, 161, 108, 0.4);
+    --grid-dot: #252b25;
+    --code-bg: #151815;
+  }
+
+  html {
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    color-scheme: light;
+  }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--accent-sage-subtle);
+    color: var(--text-main);
+  }
+}
+
+/* Tactile photography supplies the visual texture; the workbench stays quiet. */
+.editorial-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 430px);
+  align-items: center;
+  gap: 48px;
+  padding-block: 28px;
+}
+
+.editorial-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+}
+
+.editorial-rule {
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+
+.editorial-title {
+  margin-block: 12px;
+  font-size: clamp(30px, 3.2vw, 44px);
+  line-height: 1.32;
+  letter-spacing: -0.03em;
+  font-weight: 750;
+  word-break: keep-all;
+}
+
+.editorial-figure,
+.guide-figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.editorial-figure img,
+.guide-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.editorial-figure img {
+  max-height: 230px;
+}
+
+.editorial-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+
+.guide-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+}
+
+[data-theme="dark"] .editorial-figure img,
+[data-theme="dark"] .guide-figure img {
+  filter: brightness(0.86) saturate(0.85);
+}
+
+@media (max-width: 900px) {
+  .editorial-intro {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 42%);
+    gap: 24px;
+  }
+
+  .guide-intro {
+    gap: 24px;
+    grid-template-columns: minmax(0, 36%) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .editorial-intro,
+  .guide-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .editorial-intro {
+    padding-block: 24px 18px;
+  }
+
+  .editorial-figure img {
+    max-height: 160px;
+    aspect-ratio: 2 / 1;
+    object-position: center 55%;
+  }
+
+  .guide-figure img {
+    max-height: 210px;
+  }
+
+  .editorial-caption {
+    font-size: 8px;
+  }
+}
+
+/* The editing workspace uses more of the screen than the editorial content. */
+.workspace-layout > * {
+  min-width: 0;
+}
+
+.workspace-input-area {
+  height: 320px;
+}
+
+.workspace-body {
+  height: 440px;
+}
+
+.workspace-output-code {
+  height: 160px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .workspace-input-area {
+    height: 520px;
+  }
+
+  .workspace-body {
+    height: 580px;
+  }
+
+  .workspace-output-code {
+    height: 220px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .workspace-input-area,
+  .workspace-body {
+    height: clamp(560px, 68vh, 800px);
+  }
+}
+
+@media (min-width: 1536px) {
+  .workspace-layout {
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+  }
+}
+
+/* Monospace font styling for table data and code */
+.font-mono-code {
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+/* Custom subtle scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-hairline);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* Table cell focus and edit outline */
+.table-cell-selected {
+  outline: 2px solid var(--accent-sage);
+  outline-offset: -2px;
+  background-color: var(--accent-sage-subtle) !important;
+}
+
+/* Table cell keyboard focus */
+td:focus-visible {
+  outline: 2px solid var(--accent-sage) !important;
+  outline-offset: -2px !important;
+}
+
+/* Keyboard badge <kbd> style */
+kbd {
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Consolas, monospace;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-hairline);
+  background-color: var(--bg-subtle);
+  color: var(--text-muted);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Animation for toast */
+@keyframes toast-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-toast {
+  animation: toast-slide-up 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
