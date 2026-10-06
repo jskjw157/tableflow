@@ -154,22 +154,22 @@ Images are served from `public/images/` with responsive JPEG sources, reserved d
 
 | Token Name | Light Mode | Dark Mode (`[data-theme="dark"]`) | Description |
 | :--- | :--- | :--- | :--- |
-| `--bg-page` | `#FAF9F6` | `#131513` | Warm off-white / Deep charcoal slate background |
-| `--bg-surface` | `#FFFFFF` | `#191C19` | Primary card and workspace container surface |
-| `--bg-subtle` | `#F4F2EC` | `#212521` | Secondary surface, toolbar backgrounds, gutters |
-| `--bg-muted` | `#E9E7DF` | `#2A302A` | Elevated dropdowns, active item background |
-| `--border-hairline` | `#E4E1D7` | `#2B312B` | 1px subtle hairline border for high density |
-| `--border-strong` | `#CAC6B9` | `#3E463E` | Hover borders, emphasized dividers |
-| `--text-main` | `#181A18` | `#EDEEEC` | High-contrast charcoal primary text (>=7:1) |
-| `--text-muted` | `#52564E` | `#A4A99F` | Secondary descriptions, labels (>=4.5:1) |
-| `--text-subtle` | `#656961` | `#989E93` | Line numbers, hint text, stats (>=4.5:1) |
-| `--accent-sage` | `#3C5934` | `#75A16C` | Restrained olive/sage green brand accent |
-| `--accent-sage-hover` | `#314A2A` | `#87B57D` | Interactive hover state for accent |
-| `--accent-sage-subtle`| `#EDF3EB` | `#1B261A` | Active cell selection, active badge background |
-| `--accent-sage-border`| `#9FB897` | `#435C3E` | Border for active badges and selection rings |
-| `--text-on-sage` | `#FFFFFF` | `#131513` | High-contrast text token on top of `--accent-sage` |
-| `--focus-ring` | `rgba(60,89,52,0.3)` | `rgba(117,161,108,0.4)` | Accessible focus-visible ring |
-| `--grid-dot` | `#DEDBD0` | `#252B25` | Subtle canvas dotted background pattern |
+| `--bg-page` | `#F8FAFC` | `#09090B` | Clean Slate/Zinc page canvas |
+| `--bg-surface` | `#FFFFFF` | `#141417` | Crisp card & workspace surface |
+| `--bg-subtle` | `#F1F5F9` | `#1F1F23` | Secondary surface, toolbar backgrounds |
+| `--bg-muted` | `#E2E8F0` | `#27272A` | Elevated dropdowns, active item background |
+| `--border-hairline` | `#E2E8F0` | `rgba(255,255,255,0.08)` | 1px clean hairline border |
+| `--border-strong` | `#CBD5E1` | `rgba(255,255,255,0.16)` | Emphasized dividers, hover states |
+| `--text-main` | `#0F172A` | `#F8FAFC` | High-contrast crisp primary text (>=7:1) |
+| `--text-muted` | `#475569` | `#94A3B8` | Secondary descriptions, labels (>=4.5:1) |
+| `--text-subtle` | `#64748B` | `#64748B` | Line numbers, hint text, stats (>=4.5:1) |
+| `--accent-sage` | `#10B981` | `#10B981` | Vivid Emerald modern spreadsheet accent |
+| `--accent-sage-hover` | `#059669` | `#059669` | Interactive hover state for accent |
+| `--accent-sage-subtle`| `#ECFDF5` | `rgba(16,185,129,0.14)` | Active cell selection, active badge background |
+| `--accent-sage-border`| `#6EE7B7` | `rgba(16,185,129,0.35)` | Border for active badges and selection rings |
+| `--text-on-sage` | `#FFFFFF` | `#FFFFFF` | High-contrast text token on top of accent |
+| `--focus-ring` | `rgba(16,185,129,0.35)` | `rgba(52,211,153,0.4)` | Accessible focus-visible ring |
+| `--grid-dot` | `#E2E8F0` | `#27272A` | Clean canvas dotted background pattern |
 
 ### 7.2 Typography
 

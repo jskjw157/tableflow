@@ -27,7 +27,9 @@ import {
   ChevronDown,
   X,
   BookOpen,
-  ArrowUpRight
+  ArrowUpRight,
+  ClipboardPaste,
+  ArrowLeftRight
 } from 'lucide-react'
 
 const PAGE_SIZE = 200
@@ -222,6 +224,20 @@ export default function Workspace({ editor }: WorkspaceProps) {
       setTimeout(() => {
         setCopiedFormat(null)
       }, 2000)
+    }
+  }
+
+  // Quick paste from clipboard
+  const handlePasteFromClipboard = async () => {
+    try {
+      const text = await navigator.clipboard.readText()
+      if (text) {
+        editor.onSourceChange(text)
+      } else {
+        textareaRef.current?.focus()
+      }
+    } catch {
+      textareaRef.current?.focus()
     }
   }
 
@@ -444,23 +460,40 @@ export default function Workspace({ editor }: WorkspaceProps) {
               </figcaption>
             </figure>
           </div>
-          {/* Workspace Controls Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3.5 border-t border-hairline">
-            {/* Live Status Pill */}
-            <div className="flex items-center gap-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-hairline/90 shadow-2xs text-xs font-medium text-text-muted">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-sage"></span>
-                </span>
-                <span className="font-semibold text-main">실시간 양방향 변환</span>
-                <span className="text-text-subtle text-[11px] hidden sm:inline">· 입력 형식 자동 감지</span>
+          {/* Workspace Controls Header: Live Conversion Flow Bridge */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3.5 py-4 border-t border-hairline/80">
+            {/* Conversion Flow Indicator with 1-click direction switcher */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-hairline/90 shadow-2xs text-xs font-semibold text-main">
+                <FileSpreadsheet className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span>{editor.mode === 'to-markdown' ? '엑셀 / 시트' : '마크다운 표'}</span>
+              </div>
+
+              {/* Central Flow Switch Button */}
+              <button
+                type="button"
+                onClick={() =>
+                  editor.onModeChange(
+                    editor.mode === 'to-markdown' ? 'from-markdown' : 'to-markdown'
+                  )
+                }
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/80 text-xs font-bold transition-all shadow-2xs active:scale-95 group"
+                title="클릭하여 변환 방향 뒤집기 (시트 ↔ 마크다운)"
+              >
+                <ArrowLeftRight className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 duration-300" />
+                <span>실시간 양방향 변환</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+              </button>
+
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-hairline/90 shadow-2xs text-xs font-semibold text-main">
+                <CodeIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span>{editor.mode === 'to-markdown' ? '마크다운 표' : '엑셀 / 시트'}</span>
               </div>
             </div>
 
             {/* Mode & View toggles */}
             <div className="flex flex-wrap items-center gap-2.5">
-              {/* Mode switch */}
+              {/* Direct Mode Segmented Switch */}
               <div
                 role="group"
                 aria-label="변환 모드 선택"
@@ -476,8 +509,8 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       : 'text-text-muted hover:text-main font-medium'
                   }`}
                 >
-                  <FileSpreadsheet className="w-3.5 h-3.5 text-sage" />
-                  <span>시트/데이터 → 마크다운</span>
+                  <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <span>시트 → 마크다운</span>
                 </button>
                 <button
                   type="button"
@@ -489,8 +522,8 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       : 'text-text-muted hover:text-main font-medium'
                   }`}
                 >
-                  <CodeIcon className="w-3.5 h-3.5 text-sage" />
-                  <span>마크다운 → 시트/데이터</span>
+                  <CodeIcon className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <span>마크다운 → 시트</span>
                 </button>
               </div>
 
@@ -590,6 +623,17 @@ export default function Workspace({ editor }: WorkspaceProps) {
 
               {/* Action buttons */}
               <div className="flex items-center gap-1.5">
+                {/* Quick Paste from Clipboard */}
+                <button
+                  type="button"
+                  onClick={handlePasteFromClipboard}
+                  className="px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-800/80 rounded-lg transition-colors flex items-center gap-1.5 shadow-2xs active:scale-[0.98]"
+                  title="클립보드에서 바로 붙여넣기 (Ctrl/Cmd+V)"
+                >
+                  <ClipboardPaste className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <span>붙여넣기</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={editor.onSample}
@@ -720,7 +764,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
               <div
                 role="tablist"
                 aria-label="출력 포맷 선택"
-                className="inline-flex p-1 rounded-xl bg-subtle/80 border border-hairline/90 shadow-2xs"
+                className="inline-flex p-1 rounded-xl bg-subtle/90 border border-hairline shadow-2xs"
               >
                 {(
                   [
@@ -736,10 +780,10 @@ export default function Workspace({ editor }: WorkspaceProps) {
                     type="button"
                     aria-selected={editor.outputFormat === tab.id}
                     onClick={() => editor.onOutputFormatChange(tab.id)}
-                    className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
+                    className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
                       editor.outputFormat === tab.id
-                        ? 'bg-sage text-on-sage font-bold shadow-xs'
-                        : 'text-text-muted hover:text-main hover:bg-surface/60 font-medium'
+                        ? 'bg-emerald-600 text-white shadow-xs'
+                        : 'text-text-muted hover:text-main hover:bg-surface/80 font-medium'
                     }`}
                   >
                     {tab.label}
@@ -748,12 +792,12 @@ export default function Workspace({ editor }: WorkspaceProps) {
               </div>
 
               {/* Export Buttons */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 {/* Quick Excel Copy */}
                 <button
                   type="button"
                   onClick={() => handleCopy('tsv')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all flex items-center gap-1.5 shadow-2xs active:scale-[0.98] ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 shadow-2xs active:scale-[0.98] ${
                     copiedFormat === 'tsv'
                       ? 'bg-emerald-50 text-emerald-700 border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-300'
                       : 'bg-surface hover:bg-subtle text-text-muted hover:text-main border-hairline'
@@ -766,14 +810,14 @@ export default function Workspace({ editor }: WorkspaceProps) {
                   </span>
                 </button>
 
-                {/* Primary Copy Button */}
+                {/* Primary Hero Copy Button */}
                 <button
                   type="button"
                   onClick={() => handleCopy(editor.outputFormat)}
-                  className={`px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 shadow-xs active:scale-[0.98] ${
+                  className={`px-4 py-1.5 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shadow-sm active:scale-[0.98] ring-1 ring-emerald-500/30 ${
                     copiedFormat === editor.outputFormat
-                      ? 'bg-emerald-600 text-white shadow-emerald-500/20'
-                      : 'bg-sage text-on-sage hover:bg-sage-hover'
+                      ? 'bg-emerald-700 text-white ring-2 ring-emerald-400/50 shadow-emerald-500/20'
+                      : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20 hover:shadow-emerald-600/30'
                   }`}
                   title="현재 선택된 포맷 결과를 클립보드에 복사 (Ctrl/Cmd+Shift+C)"
                 >
@@ -898,7 +942,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       }
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-lg border transition-all ${
                         editor.options.header
-                          ? 'bg-sage text-on-sage font-bold shadow-xs border-sage'
+                          ? 'bg-emerald-600 text-white font-bold shadow-xs border-emerald-600'
                           : 'bg-surface border-hairline/80 text-text-muted hover:text-main hover:bg-subtle/50 font-medium'
                       }`}
                       title="첫 번째 줄을 마크다운 표 제목(헤더)으로 지정합니다"
@@ -906,7 +950,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       <span
                         className={`w-3.5 h-3.5 rounded flex items-center justify-center text-[10px] font-bold ${
                           editor.options.header
-                            ? 'bg-white/20 text-on-sage'
+                            ? 'bg-white/20 text-white'
                             : 'border border-hairline text-transparent'
                         }`}
                       >
@@ -924,7 +968,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       }
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-lg border transition-all ${
                         editor.options.pretty
-                          ? 'bg-sage text-on-sage font-bold shadow-xs border-sage'
+                          ? 'bg-emerald-600 text-white font-bold shadow-xs border-emerald-600'
                           : 'bg-surface border-hairline/80 text-text-muted hover:text-main hover:bg-subtle/50 font-medium'
                       }`}
                       title="한글 및 문자 너비에 맞게 마크다운 열 간격을 가지런히 맞춥니다"
@@ -932,7 +976,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       <span
                         className={`w-3.5 h-3.5 rounded flex items-center justify-center text-[10px] font-bold ${
                           editor.options.pretty
-                            ? 'bg-white/20 text-on-sage'
+                            ? 'bg-white/20 text-white'
                             : 'border border-hairline text-transparent'
                         }`}
                       >
@@ -950,7 +994,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       }
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-lg border transition-all ${
                         editor.options.trim
-                          ? 'bg-sage text-on-sage font-bold shadow-xs border-sage'
+                          ? 'bg-emerald-600 text-white font-bold shadow-xs border-emerald-600'
                           : 'bg-surface border-hairline/80 text-text-muted hover:text-main hover:bg-subtle/50 font-medium'
                       }`}
                       title="각 셀의 앞뒤 불필요한 빈칸을 깔끔하게 제거합니다"
@@ -958,7 +1002,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       <span
                         className={`w-3.5 h-3.5 rounded flex items-center justify-center text-[10px] font-bold ${
                           editor.options.trim
-                            ? 'bg-white/20 text-on-sage'
+                            ? 'bg-white/20 text-white'
                             : 'border border-hairline text-transparent'
                         }`}
                       >
@@ -978,7 +1022,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       }
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-lg border transition-all ${
                         editor.options.removeEmpty
-                          ? 'bg-sage text-on-sage font-bold shadow-xs border-sage'
+                          ? 'bg-emerald-600 text-white font-bold shadow-xs border-emerald-600'
                           : 'bg-surface border-hairline/80 text-text-muted hover:text-main hover:bg-subtle/50 font-medium'
                       }`}
                       title="내용이 없는 빈 행을 자동으로 제외합니다"
@@ -986,7 +1030,7 @@ export default function Workspace({ editor }: WorkspaceProps) {
                       <span
                         className={`w-3.5 h-3.5 rounded flex items-center justify-center text-[10px] font-bold ${
                           editor.options.removeEmpty
-                            ? 'bg-white/20 text-on-sage'
+                            ? 'bg-white/20 text-white'
                             : 'border border-hairline text-transparent'
                         }`}
                       >

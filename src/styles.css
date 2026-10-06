@@ -19,43 +19,43 @@
 
 @layer base {
   :root {
-    --bg-page: #faf9f6;
+    --bg-page: #f8fafc;
     --bg-surface: #ffffff;
-    --bg-subtle: #f4f2ec;
-    --bg-muted: #e9e7df;
-    --border-hairline: #e4e1d7;
-    --border-strong: #cac6b9;
-    --text-main: #181a18;
-    --text-muted: #52564e;
-    --text-subtle: #656961;
-    --accent-sage: #3c5934;
-    --accent-sage-hover: #314a2a;
-    --accent-sage-subtle: #edf3eb;
-    --accent-sage-border: #9fb897;
+    --bg-subtle: #f1f5f9;
+    --bg-muted: #e2e8f0;
+    --border-hairline: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --text-subtle: #64748b;
+    --accent-sage: #10b981;
+    --accent-sage-hover: #059669;
+    --accent-sage-subtle: #ecfdf5;
+    --accent-sage-border: #6ee7b7;
     --text-on-sage: #ffffff;
-    --focus-ring: rgba(60, 89, 52, 0.3);
-    --grid-dot: #dedbd0;
-    --code-bg: #f8f6f0;
+    --focus-ring: rgba(16, 185, 129, 0.35);
+    --grid-dot: #e2e8f0;
+    --code-bg: #f8fafc;
   }
 
   [data-theme="dark"] {
-    --bg-page: #131513;
-    --bg-surface: #191c19;
-    --bg-subtle: #212521;
-    --bg-muted: #2a302a;
-    --border-hairline: #2b312b;
-    --border-strong: #3e463e;
-    --text-main: #edeeec;
-    --text-muted: #a4a99f;
-    --text-subtle: #989e93;
-    --accent-sage: #75a16c;
-    --accent-sage-hover: #87b57d;
-    --accent-sage-subtle: #1b261a;
-    --accent-sage-border: #435c3e;
-    --text-on-sage: #131513;
-    --focus-ring: rgba(117, 161, 108, 0.4);
-    --grid-dot: #252b25;
-    --code-bg: #151815;
+    --bg-page: #09090b;
+    --bg-surface: #141417;
+    --bg-subtle: #1f1f23;
+    --bg-muted: #27272a;
+    --border-hairline: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-subtle: #64748b;
+    --accent-sage: #10b981;
+    --accent-sage-hover: #059669;
+    --accent-sage-subtle: rgba(16, 185, 129, 0.14);
+    --accent-sage-border: rgba(16, 185, 129, 0.35);
+    --text-on-sage: #ffffff;
+    --focus-ring: rgba(52, 211, 153, 0.4);
+    --grid-dot: #27272a;
+    --code-bg: #0d0e11;
   }
 
   html {
